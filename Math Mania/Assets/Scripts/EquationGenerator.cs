@@ -83,5 +83,6 @@ public class EquationGenerator : MonoBehaviour
 
         timerText.text = "0";
         isRunning = false;
+        inputText.interactable = false;
     }
 }
