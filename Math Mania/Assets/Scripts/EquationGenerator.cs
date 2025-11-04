@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -19,9 +20,24 @@ public class EquationGenerator : MonoBehaviour
     {
         int a = Random.Range(1, 20);
         int b = Random.Range(1, 20);
-        //string op = Random.Range(1, 2) == 0 ? "+" : "-";
-        equationText.text = currentEquation = $"{a} + {b}";
-        correctAnswer = a + b;
+        string op = Random.Range(0, 2) == 0 ? "+" : "-";
+        if (op == "+")
+        {
+            correctAnswer = a + b;
+        }
+        else // "-"
+        {
+            if (b > a) //e.g. a = 5 b = 10
+            {
+                int temp;
+                temp = a;
+                a = b;
+                b = temp;
+            }
+            correctAnswer = a - b;
+        }
+        equationText.text = currentEquation = $"{a} {op} {b}";
+
     }
 
     public void CheckValue()
@@ -32,9 +48,15 @@ public class EquationGenerator : MonoBehaviour
         {
             if (playerAnswer == correctAnswer)
             {
+                StartCoroutine(Timer(0.5f));
                 GenerateEquation();
                 inputText.text = "";
             }
         }
+    }
+
+    IEnumerator Timer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
     }
 }
