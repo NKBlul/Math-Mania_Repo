@@ -6,14 +6,23 @@ public class EquationGenerator : MonoBehaviour
 {
     public string currentEquation;
     public int correctAnswer;
+    public int points = 0;
     public enum Difficulty { Easy, Medium, Hard }
 
+    public TextMeshProUGUI timerText;
     public TextMeshProUGUI equationText;
+    public TextMeshProUGUI pointText;
     public TMP_InputField inputText;
+
+    public float timeLimit = 30f; // seconds per question
+    private float currentTime;
+    private Coroutine countdownCoroutine;
+    private bool isRunning = false;
 
     private void Start()
     {
-       GenerateEquation();
+        StartCountdown();
+        GenerateEquation();
     }
 
     public void GenerateEquation()
@@ -48,15 +57,31 @@ public class EquationGenerator : MonoBehaviour
         {
             if (playerAnswer == correctAnswer)
             {
-                StartCoroutine(Timer(0.5f));
                 GenerateEquation();
                 inputText.text = "";
+                points++;
+                pointText.text = $"Points: {points}";
             }
         }
     }
 
-    IEnumerator Timer(float duration)
+    private void StartCountdown()
     {
-        yield return new WaitForSeconds(duration);
+        currentTime = timeLimit;
+        isRunning = true;
+        StartCoroutine(Timer());
+    }
+
+    IEnumerator Timer()
+    {
+        while (currentTime > 0)
+        {
+            currentTime -= Time.deltaTime;
+            timerText.text = Mathf.Ceil(currentTime).ToString("0");
+            yield return null;
+        }
+
+        timerText.text = "0";
+        isRunning = false;
     }
 }
