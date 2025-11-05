@@ -9,6 +9,7 @@ public class EquationGenerator : MonoBehaviour
     public string currentEquation;
     public int correctAnswer;
     public int score = 0;
+    public int highScore = 0;
     public enum Difficulty { Easy, Medium, Hard }
 
     [Header("Main Texts:")]
@@ -32,6 +33,9 @@ public class EquationGenerator : MonoBehaviour
 
     private void Start()
     {
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        highScoreText.text = $"High Score: {highScore}";
+
         StartCountdown();
         GenerateEquation();
     }
@@ -101,8 +105,19 @@ public class EquationGenerator : MonoBehaviour
     private void ShowPanel()
     {
         endPanel.SetActive(true);
+
+        // Check for new high score
+        if (score > highScore)
+        {
+            highScore = score;
+            PlayerPrefs.SetInt("HighScore", highScore);
+            PlayerPrefs.Save();
+        }
+
+        scoreText.text = $"Score: {score}";
+        highScoreText.text = $"High Score: {highScore}";
+
         mainMenuButton.onClick.AddListener(() => ScenesManager.instance.LoadLevel("MainMenu"));
         replayButton.onClick.AddListener(() => ScenesManager.instance.LoadLevel("SpeedCountScene"));
-        scoreText.text = pointText.text;
     }
 }

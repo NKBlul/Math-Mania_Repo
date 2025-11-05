@@ -1803,11 +1803,12 @@ MonoBehaviour:
   currentEquation: 
   correctAnswer: 0
   score: 0
+  highScore: 0
   timerText: {fileID: 1849045421}
   equationText: {fileID: 1075242293}
   pointText: {fileID: 922514526}
   inputText: {fileID: 584418290}
-  timeLimit: 3
+  timeLimit: 10
   endPanel: {fileID: 1716025112}
   scoreText: {fileID: 478276597}
   highScoreText: {fileID: 1501418548}
