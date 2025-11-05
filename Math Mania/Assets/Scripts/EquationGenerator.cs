@@ -1,23 +1,34 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EquationGenerator : MonoBehaviour
 {
+    [Header("Values: ")]
     public string currentEquation;
     public int correctAnswer;
-    public int points = 0;
+    public int score = 0;
     public enum Difficulty { Easy, Medium, Hard }
 
+    [Header("Main Texts:")]
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI equationText;
     public TextMeshProUGUI pointText;
     public TMP_InputField inputText;
 
+    [Header("Timer: ")]
     public float timeLimit = 30f; // seconds per question
     private float currentTime;
     private Coroutine countdownCoroutine;
     private bool isRunning = false;
+
+    [Header("End Panel: ")]
+    public GameObject endPanel;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
+    public Button mainMenuButton;
+    public Button replayButton;
 
     private void Start()
     {
@@ -59,8 +70,8 @@ public class EquationGenerator : MonoBehaviour
             {
                 GenerateEquation();
                 inputText.text = "";
-                points++;
-                pointText.text = $"Points: {points}";
+                score++;
+                pointText.text = $"Score: {score}";
             }
         }
     }
@@ -84,5 +95,14 @@ public class EquationGenerator : MonoBehaviour
         timerText.text = "0";
         isRunning = false;
         inputText.interactable = false;
+        ShowPanel();
+    }
+
+    private void ShowPanel()
+    {
+        endPanel.SetActive(true);
+        mainMenuButton.onClick.AddListener(() => ScenesManager.instance.LoadLevel("MainMenu"));
+        replayButton.onClick.AddListener(() => ScenesManager.instance.LoadLevel("SpeedCountScene"));
+        scoreText.text = pointText.text;
     }
 }
