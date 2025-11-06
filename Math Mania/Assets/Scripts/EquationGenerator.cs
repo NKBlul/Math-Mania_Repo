@@ -81,10 +81,10 @@ public class EquationGenerator : MonoBehaviour
 
             case Difficulty.Hard:
                 // Generate a PEMDAS-style expression
-                int c = Random.Range(1, 11);
-                int d = Random.Range(1, 11);
-                a = Random.Range(1, 11);
-                b = Random.Range(1, 11);
+                int c = Random.Range(1, 6);
+                int d = Random.Range(1, 6);
+                a = Random.Range(1, 6);
+                b = Random.Range(1, 6);
 
                 // Randomly choose operators
                 string op1 = Random.Range(0, 2) == 0 ? "+" : "-";

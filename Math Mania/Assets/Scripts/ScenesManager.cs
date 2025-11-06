@@ -11,9 +11,12 @@ public class ScenesManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            Debug.Log($"ScenesManager instance created in scene: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
+
         }
         else
         {
+            Debug.LogWarning($"Duplicate ScenesManager detected in {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}, destroying it.");
             Destroy(gameObject);
         }
     }
